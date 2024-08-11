@@ -1,0 +1,54 @@
+<c-row ngPreserveWhitespaces>
+    <c-col xs="12">
+    <c-card>
+      <c-card-header class="d-flex align-items-center justify-content-between" >
+          <div>My Profile</div>
+    
+      </c-card-header>
+      <c-card-body class="p-4" >  
+
+        <form  cForm [formGroup]="this.form" (ngSubmit)="onSubmit()">
+          
+          @if(!this.formLoader){
+     
+            <div class="mb-3">
+              <label cLabel >Name</label>
+              <input cFormControl
+                    formControlName="name"
+                    placeholder="Name"
+                    type="text"
+              />
+        
+            </div>
+  
+            <div class="mb-3">
+              <label cLabel>Email address</label>
+              <input readonly cFormControl
+                    formControlName="email"
+                    placeholder="name@example.com"
+                    type="email"
+              />
+      
+            </div>
+            
+            <div class="text-center">
+                <button type="submit"  class="text-white" color="success" cButton>Update</button>
+            </div>
+          }@else{
+            <p  class="text-center" >Loading</p>
+          }
+
+        </form>
+     
+ 
+    </c-card-body>
+  </c-card>
+  
+     </c-col>
+  </c-row>
+  
+  
+
+  
+   
+    

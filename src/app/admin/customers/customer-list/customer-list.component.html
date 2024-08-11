@@ -1,0 +1,97 @@
+<c-row ngPreserveWhitespaces>
+    <c-col xs="12">
+    <c-card>
+      <c-card-header class="d-flex align-items-center justify-content-between" >
+          <div>All Customers List</div>
+          <div>
+            <a class="btn btn-success text-white" routerLink="/admin/customers/create">Add New</a>
+          </div>
+      </c-card-header>
+      <c-card-body class="p-4" >  
+        <div class="d-flex justify-content-between" >
+           <div>
+              <div class="d-flex align-items-center dataTables_length" id="example23_length">
+                <label>Show </label> 
+                  <select name="example23_length" aria-controls="example23" class="form-control form-control-sm">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                  </select> 
+                  <label>entries</label>
+                </div>
+           </div>
+           <div class="text-end" >
+            <p>Showing 1 to 10 of 7,203 entries</p>
+           </div>
+        </div>
+          <!-- <ng-container *ngTemplateOutlet="liveDemo" /> -->
+           @if(!this.listLoader){
+        <table
+        [hover]="false"
+        [responsive]="false"
+        [striped]="true"
+        align="middle"
+        cTable
+        class="mb-0 border">
+        <thead class="text-nowrap text-truncate">
+        <tr>
+          <th class=" text-center ">
+            <svg cIcon name="cilPeople"></svg>
+          </th>
+          <th class="text-center">Name</th>
+          <th class="text-center">Email</th>
+          <th class="text-center">Phone</th>
+          <th class="text-center">Country</th>
+          <th class="text-center">State/Province</th>
+          <th class="text-center">City</th>
+          <th class="text-center">Sreet Address</th>
+          <th class="text-center">Activity</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (user of this.dataSource; track user.key; let i = $index) {
+            <tr key="i" >
+  
+              <td class="text-center">
+                {{user.key}}
+              </td>
+              <td>
+                <div>{{ user.fullname }}</div>
+              </td>
+              <td class="text-start">
+                {{user.email}}
+              </td>
+              <td class="text-start">
+                {{user.phone}}
+              </td>
+              <td class="text-start">
+                {{user.country}}
+              </td>
+              <td class="text-start">
+                {{user.state}}
+              </td>
+              <td class="text-start">
+                {{user.city}}
+              </td>
+              <td class="text-start">
+                {{user.street_address}}
+              </td>
+              <td class="d-flex justify-content-center" >
+                <a [routerLink]="'/admin/customers/edit/'+user.id" class="border-0">
+                  <svg class=" text-success" [cIcon]="icons.cilBrush" size="xl" title="List Icon"></svg>
+                </a>
+                <button (click)="this.delete(user.id)" class="border-0" >
+                  <svg class="text-danger" [cIcon]="icons.cilXCircle" size="xl" title="List Icon"></svg>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }@else{
+      <p class="text-center">Loading</p>
+    }
+    </c-card-body>
+  </c-card>

@@ -1,0 +1,222 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+  <c-card>
+    <c-card-header class="d-flex align-items-center justify-content-between" >
+        <div>All Users List</div>
+        <div>
+          <button (click)="addNewUser()" class="text-white" color="success" cButton>Add New</button>
+
+         
+        </div>
+    </c-card-header>
+    <c-card-body class="p-4" >  
+      <div class="d-flex justify-content-between" >
+         <div>
+            <div class="d-flex align-items-center dataTables_length" id="example23_length">
+              <label>Show </label> 
+                <select name="example23_length" aria-controls="example23" class="form-control form-control-sm">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                  <option value="200">200</option>
+                </select> 
+                <label>entries</label>
+              </div>
+         </div>
+         <div class="text-end" >
+          <p>Showing 1 to 10 of 7,203 entries</p>
+         </div>
+      </div>
+        <!-- <ng-container *ngTemplateOutlet="liveDemo" /> -->
+         @if(!this.listLoader){
+      <table
+      [hover]="true"
+      [responsive]="true"
+      [striped]="true"
+      align="middle"
+      cTable
+      class="mb-0 border">
+      <thead class="text-nowrap text-truncate">
+      <tr>
+        <th class=" text-center ">
+          <svg cIcon name="cilPeople"></svg>
+        </th>
+        <th class="text-center">User</th>
+        <th class="text-center">Email</th>
+        <th class="text-center">Activity</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (user of this.dataSource; track user.id; let i = $index) {
+          <tr key="i" >
+
+            <td class="text-center">
+              <c-avatar [size]="'md'" src="{{ user.avatar }}" status="{{ user.status }}" />
+            </td>
+            <td>
+              <div>{{ user.name }}</div>
+            </td>
+            <td class="text-start">
+              {{user.email}}
+            </td>
+            <td class="d-flex justify-content-center" >
+              <button class="border-0" (click)="OpenEditUserModal(user.id)">
+                <svg class=" text-success" [cIcon]="icons.cilBrush" size="xl" title="List Icon"></svg>
+              </button>
+              <button class="border-0" (click)="deleteUser(user.id)">
+                <svg class="text-danger" [cIcon]="icons.cilXCircle" size="xl" title="List Icon"></svg>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }@else{
+    <p class="text-center">Loading</p>
+  }
+  </c-card-body>
+</c-card>
+
+   </c-col>
+</c-row>
+
+
+<c-modal [visible]="editModal" (visibleChange)="editModalChange($event)">
+  <form cForm [formGroup]="this.editForm" (ngSubmit)="editSubmit()" >
+  <c-modal-header>
+     <h5 cModalTitle>Edit User Form</h5>
+     <button (click)="this.editModalChange(false)" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+   
+      @if(!this.editFormLoader){
+
+        @if(this.editData){
+
+          <input formControlName="id" type="hidden"/>
+          <div class="mb-3">
+            <label cLabel for="exampleFormControlInput1">Name</label>
+            <input cFormControl
+                  formControlName="name"
+                  id="exampleFormControlInput1"
+                  placeholder="Name"
+                  type="text"
+            />
+            @if(this.editForm.controls['name'].touched){
+              <div class="errors" *ngIf="this.editForm.controls['name'].errors" >
+                <p style="color: red;" class="mat-body-1">  Invalid Name Field</p>              
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label cLabel for="exampleFormControlInput1">Email address</label>
+            <input cFormControl
+                  formControlName="email"
+                  id="exampleFormControlInput1"
+                  placeholder="name@example.com"
+                  type="email"
+            />
+            @if(this.editForm.controls['email'].touched){
+              <div class="errors" *ngIf="this.editForm.controls['email'].errors" >
+                <p style="color: red;" class="mat-body-1">  Invalid Email Field</p>              
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label cLabel for="exampleFormControlInput1">Password</label>
+            <input cFormControl
+                  formControlName="password"
+                  id="exampleFormControlInput1"
+                  placeholder="Password"
+                  type="text"
+            />
+            @if(this.editForm.controls['password'].touched){
+              <div class="errors" *ngIf="this.editForm.controls['password'].errors" >
+                <p style="color: red;" class="mat-body-1">  Invalid Password Field</p>              
+              </div>
+            }
+          </div>
+        
+        }@else{
+          <p class="text-center">Data Not Found</p>
+        }
+
+     }@else{
+        <p class="text-center" >Loading</p>
+     }
+  </c-modal-body>
+  <c-modal-footer class="justify-content-center">
+    <!-- <button (click)="this.editModalChange(false)" cButton color="secondary">Close</button> -->
+    <button cButton type="submit" [disabled]="this.editFormLoader" class="text-white" color="primary">Update</button>
+  </c-modal-footer>
+</form>
+</c-modal>
+  
+
+  <!-- <ng-template #liveDemo> -->
+    <c-modal  [visible]="this.createUserModal" (visibleChange)="this.handleCreateUserForm($event)">
+      <form cForm [formGroup]="this.createUserForm" (ngSubmit)="this.createFormSubmit()">
+      <c-modal-header>
+         <h5 cModalTitle>Add New User</h5>
+         <button (click)="this.handleCreateUserForm(false)" cButtonClose></button>
+      </c-modal-header>
+      <c-modal-body>
+        @if(!this.editFormLoader){
+        
+          <div class="mb-3">
+            <label cLabel for="exampleFormControlInput1">Name</label>
+            <input cFormControl
+                  formControlName="name"
+                  id="exampleFormControlInput1"
+                  placeholder="Name"
+                  type="text"
+            />
+            @if(this.createUserForm.controls['name'].touched){
+              <div class="errors" *ngIf="this.createUserForm.controls['name'].errors" >
+                 <p style="color: red;" class="mat-body-1">  Invalid Name Field</p>              
+              </div>
+             }
+          </div>
+
+          <div class="mb-3">
+            <label cLabel for="exampleFormControlInput1">Email address</label>
+            <input cFormControl
+                  formControlName="email"
+                  placeholder="name@example.com"
+                  type="email"
+            />
+            @if(this.createUserForm.controls['email'].touched){
+              <div class="errors" *ngIf="this.createUserForm.controls['email'].errors" >
+                 <p style="color: red;" class="mat-body-1">  Invalid Email Field</p>              
+              </div>
+             }
+          </div>
+
+          <div class="mb-3">
+            <label cLabel for="exampleFormControlInput1">Password</label>
+            <input cFormControl
+                  formControlName="password"
+                  placeholder="Password"
+                  type="text"
+            />
+            @if(this.createUserForm.controls['password'].touched){
+              <div class="errors" *ngIf="this.createUserForm.controls['password'].errors" >
+                 <p style="color: red;" class="mat-body-1">  Invalid Password Field</p>              
+              </div>
+             }
+          </div>
+        }@else {
+          <p class="text-center" >Loading</p>
+        } 
+
+      </c-modal-body>
+      <c-modal-footer class="justify-content-center" >
+        <button cButton class="text-white"  [disabled]="this.createFormLoader" type="submit" color="primary">Submit</button>
+      </c-modal-footer>
+      </form>
+    </c-modal>
+  <!-- </ng-template> -->
+  

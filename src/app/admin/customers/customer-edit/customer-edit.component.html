@@ -1,0 +1,132 @@
+<c-row ngPreserveWhitespaces>
+    <c-col xs="12">
+    <c-card>
+      <c-card-header class="d-flex align-items-center justify-content-between" >
+          <div>Edit Customer </div>
+          <div>
+      
+          </div>
+      </c-card-header>
+      <c-card-body class="p-4" >  
+
+        <form cForm [formGroup]="this.form" (ngSubmit)="onSubmit()" >
+            @if(!this.formLoader){
+            <fieldset class="border " >
+                <legend class="float-none w-auto" >Personal Details:</legend>
+
+            <c-row>
+                <c-col xs="6">
+                    <div class="mb-3">
+                        <label cLabel >Fullname</label>
+                        <input cFormControl
+                            formControlName="fullname"
+                            placeholder="Name"
+                            type="text"
+                        />
+                    </div>
+                </c-col>
+                <c-col xs="6">
+                    <div class="mb-3">
+                        <label cLabel >Email</label>
+                        <input cFormControl
+                            placeholder="Email"
+                            formControlName="email"
+                            type="text"
+                        />
+                    </div>
+                </c-col>
+                <c-col xs="6">
+                    <div class="mb-3">
+                        <label cLabel >Phone</label>
+                        <input cFormControl
+                            placeholder="Phone"
+                            formControlName="phone"
+                            type="text"
+                        />
+                    </div>
+                </c-col>
+                <c-col xs="6">
+                    <div class="mb-3">
+                        <label cLabel >National Identity</label>
+                        <input cFormControl
+                            placeholder="NIC"
+                            formControlName="cnic"
+                            type="text"
+                        />
+                    </div>
+                </c-col>
+            </c-row>
+        </fieldset>
+
+        <fieldset class="border">
+            
+            <legend class="float-none w-auto" >Address Details:</legend>
+
+            <c-row>
+                <c-col xs="6">
+                    <div class="mb-3">
+                        <label cLabel >Country</label>
+                        <input cFormControl
+                            placeholder="Country"
+                            formControlName="country"
+                            type="text"
+                        />
+                    </div>
+                </c-col>
+                <c-col xs="6">
+                    <div class="mb-3">
+                        <label cLabel >Province/State</label>
+                        <input cFormControl
+                            placeholder="Province / State"
+                            formControlName="state"
+                            type="text"
+                        />
+                    </div>
+                </c-col>
+                <c-col xs="6">
+                    <div class="mb-3">
+                        <label cLabel >City</label>
+                        <input cFormControl
+                            placeholder="City"
+                            formControlName="city"
+                            type="text"
+                        />
+                    </div>
+                </c-col>
+                <c-col xs="6">
+                    <div class="mb-3">
+                        <label cLabel >Postal Code</label>
+                        <input cFormControl
+                            placeholder="Postal Code"
+                            formControlName="postal_code"
+                            type="text"
+                        />
+                    </div>
+                </c-col>
+                <c-col xs="12">
+                    <div class="mb-3">
+                        <label cLabel >Street Address</label>
+                        <input cFormControl
+                            placeholder="Street Address"
+                            formControlName="street_address"
+                            type="text"
+                        />
+                    </div>
+                </c-col>
+            </c-row>
+            </fieldset>
+
+             <div class="text-center"> 
+                <button type="submit" class="btn btn-success text-white" >Update</button>
+             </div>
+
+            }@else{
+                <p class="text-center" >Loading</p>
+             }
+
+            </form>
+     
+      
+    
+    </c-card-body>
+  </c-card>

@@ -1,0 +1,61 @@
+<div class="bg-primary dark:bg-transparent min-vh-100 d-flex flex-row align-items-center">
+    <c-container breakpoint="md">
+      <c-row class="justify-content-center">
+        <c-col lg="6" xl="5">
+            <c-card class="p-4">
+              <c-card-body>
+                <form cForm [formGroup]="this.myForm" (ngSubmit)="this.loginSubmit()"  >
+           
+                  <h1 class="text-center" >Login</h1>
+                  <p class="text-center text-body-secondary">Sign In to your account</p>
+           
+                  <c-input-group class="mb-2">
+                    <span cInputGroupText><svg cIcon name="cilUser"></svg></span>
+                    <input formControlName="email" autoComplete="email" cFormControl placeholder="Email" />
+                  </c-input-group>
+                  @if(this.myForm.controls['email'].touched){
+                    <div class="d-block errors" *ngIf="this.myForm.controls['email'].errors" >
+                         <p class="text-body-primary  text-danger">Invalid Email Field</p>              
+                    </div>
+                   }
+                 
+                  <c-input-group class="mb-2">
+                    <span cInputGroupText><svg cIcon name="cilLockLocked"></svg></span>
+                    <input
+                      autoComplete="current-password"
+                      cFormControl
+                      formControlName="password"
+                      placeholder="Password"
+                      type="password"
+                    />
+                  </c-input-group>
+                  @if(this.myForm.controls['password'].touched){
+                    <div class="d-block errors" *ngIf="this.myForm.controls['password'].errors" >
+                       <p class="text-body-primary text-danger">  Invalid Password Field</p>              
+                    </div>
+                }
+                 
+                  <c-row>
+                    <c-col xs="12" class="text-end" >
+                        <a routerLink="/admin/forget-password" class="text-decoration-none text-body-secondary" color="link" >Forgot password?</a>
+                    </c-col>
+                  
+                    <c-col xs="12" class="text-center" >
+                      <button [disabled]="this.formLoader" type="submit" cButton class="text-white px-4" color="primary">
+                        Login
+                      </button>
+                    </c-col>
+
+                    <c-col class="text-center pt-3" xs="12">
+                        <a routerLink="/admin/register"  class="text-body-secondary text-decoration-none" color="link" >If You Dont Have Account?</a>
+                      </c-col>
+                  </c-row>
+
+                </form>
+              </c-card-body>
+            </c-card>
+        </c-col>
+      </c-row>
+    </c-container>
+  </div>
+  
